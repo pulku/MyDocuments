@@ -17,24 +17,24 @@ public class MyDocumentsTestWithSpring {
 
     private ClassPathXmlApplicationContext context;
     private SearchEngine engine;
-    private Type documentType;
+    private Type webType;
 
     @Before
     public void setup() {
         context = new ClassPathXmlApplicationContext("META-INF/spring/mydocuments-context.xml");
         engine = context.getBean(SearchEngine.class);
-        documentType = context.getBean(Type.class);
+        webType = context.getBean("webType", Type.class);
     }
 
     @Test
     public void testWithSpringFindByType() {
-        List<Document> documents = engine.findByType(documentType);
+        List<Document> documents = engine.findByType(webType);
 
         assertNotNull(documents);
         assertTrue(documents.size() == 1);
-        assertEquals(documentType.getName(), documents.get(0).getType().getName());
-        assertEquals(documentType.getDesc(), documents.get(0).getType().getDesc());
-        assertEquals(documentType.getExtension(), documents.get(0).getType().getExtension());
+        assertEquals(webType.getName(), documents.get(0).getType().getName());
+        assertEquals(webType.getDesc(), documents.get(0).getType().getDesc());
+        assertEquals(webType.getExtension(), documents.get(0).getType().getExtension());
     }
 
     @Test
